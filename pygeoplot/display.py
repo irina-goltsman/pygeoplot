@@ -46,8 +46,13 @@ draw_functions = {
     },
 
     "Heatmap": function(map, obj) {
+        options = {
+            radius: obj.radius,
+            intensityOfMidpoint: obj.intensityOfMidpoint,
+            dissipating: obj.dissipating
+        };
         ymaps.modules.require(['Heatmap'], function (Heatmap) {
-            var heatmap = new Heatmap(obj.points);
+            var heatmap = new Heatmap(obj.points, options);
             heatmap.setMap(map);
         });
     }

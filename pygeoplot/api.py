@@ -83,10 +83,13 @@ class Map(object):
             'opacity': opacity,
         })
 
-    def add_heatmap(self, points):
+    def add_heatmap(self, points, intensity_of_midpoint=0.2, radius=10, dissipating=False):
         self.add_object({
             'type': 'Heatmap',
             'points': _coordinates_many(points),
+            "intensityOfMidpoint": intensity_of_midpoint,
+            "radius": radius,
+            "dissipating": dissipating
         })
 
     def to_dict(self):
