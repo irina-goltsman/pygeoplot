@@ -13,7 +13,7 @@ A library for plotting data on the map.
 
 To install PyGeoPlot just clone the repository and run `setup.py`.
 ```bash
-$ git clone https://github.com/romovpa/pygeoplot.git
+$ git clone https://github.yandex-team.ru/goltsman/pygeoplot.git
 $ cd pygeoplot
 $ python setup.py install
 ```
