@@ -110,7 +110,7 @@ TEMPLATE_HTML = jinja2.Template("""
     require.config({
         paths: {
             "ymaps": "https://api-maps.yandex.ru/2.1/?lang=ru_RU",
-            "heatmap": "https://dl.dropboxusercontent.com/u/20300574/Heatmap.min"
+            "heatmap": "http://yandex.github.io/mapsapi-heatmap/Heatmap.min"
         }
     });
 
@@ -134,7 +134,7 @@ TEMPLATE_STANDALONE_HTML = jinja2.Template("""
 <head>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://api-maps.yandex.ru/2.0/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
 </head>
 <body>
     {{ body }}
