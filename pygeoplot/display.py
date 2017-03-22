@@ -134,7 +134,7 @@ TEMPLATE_STANDALONE_HTML = jinja2.Template("""
 <head>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://api-maps.yandex.ru/2.1/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 </head>
 <body>
     {{ body }}
@@ -161,6 +161,6 @@ def map_to_html(map, width=640, height=480, resizeable=False, container_id=None)
 
     return html
 
+
 def standalone_html(body):
     return TEMPLATE_STANDALONE_HTML.render(body=body)
-
