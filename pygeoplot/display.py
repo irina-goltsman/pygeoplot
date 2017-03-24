@@ -103,7 +103,8 @@ function show_map(id, map_data) {
 
 TEMPLATE_HTML = jinja2.Template("""
 <div id="{{ container_id }}" style="width: {{ width }}px; height: {{ height }}px"></div>
-
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+<script src="https://cdn.rawgit.com/yandex/mapsapi-heatmap/master/build/heatmap.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     {{ js_code }}
 
