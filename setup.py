@@ -4,7 +4,7 @@ from distutils.core import setup
 
 setup(
     name='pygeoplot',
-    version='0.3',
+    version='0.4',
     description='A tool for plotting data on the interactive maps (e.g. Yandex.Maps)',
     author='Peter Romov',
     author_email='peter@romov.ru',
