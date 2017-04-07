@@ -10,32 +10,56 @@ __all__ = ['Map', 'GeoPoint']
 
 
 class GeoPoint(object):
-    def __init__(self, lat, lng):
+    def __init__(self, lat, lon, weight=None):
         self.lat = lat
-        self.lng = lng
+        self.lon = lon
+        self.weight = weight
 
     @staticmethod
     def parse(obj):
         if isinstance(obj, GeoPoint):
             return obj  # FIXME: why doesnt work?
-        elif (isinstance(obj, list) or isinstance(obj, tuple)) and len(obj) == 2:
-            return GeoPoint(lat=obj[0], lng=obj[1])
+
+        elif (isinstance(obj, list) or isinstance(obj, tuple)) and len(obj) in [2, 3]:
+            return GeoPoint(*obj)
+
         elif isinstance(obj, str):
-            parts = obj.split(',', 1)
-            return GeoPoint(lat=float(parts[0]), lng=float(parts[1]))
+            parts = obj.strip().split(',')
+            return GeoPoint(*map(float, parts))
+
         else:
             raise ValueError('Cannot convert "%s" to GeoPoint' % repr(obj))
 
     def to_coord(self):
-        return (self.lat, self.lng)
+        return self.lat, self.lon
 
 
 def _coordinates(point):
-    return GeoPoint.parse(point).to_coord()
+    geo_point = GeoPoint.parse(point)
+    if geo_point.weight:
+            return {
+                "type": 'Feature',
+                "geometry": {
+                    "type": 'Point',
+                    "coordinates": geo_point.to_coord()
+                },
+                "properties": {
+                    "weight": geo_point.weight
+                }
+            }
+    else:
+        return geo_point.to_coord()
 
 
 def _coordinates_many(points):
-    return [GeoPoint.parse(point).to_coord() for point in points]
+    coordinates = [_coordinates(point) for point in points]
+    if len(coordinates) > 0 and isinstance(coordinates[0], dict):
+        return {
+            "type": 'FeatureCollection',
+            "features": coordinates
+        }
+
+    return coordinates
 
 
 class Map(object):
