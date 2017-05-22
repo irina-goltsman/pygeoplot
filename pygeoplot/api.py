@@ -107,13 +107,26 @@ class Map(object):
             'opacity': opacity,
         })
 
-    def add_heatmap(self, points, intensity_of_midpoint=0.2, radius=10, dissipating=False):
+    def add_heatmap(
+        self,
+        points,
+        intensity_of_midpoint=0.2,
+        radius=10,
+        dissipating=False,
+        gradient={
+            0.1: 'rgba(128, 255, 0, 0.7)',
+            0.2: 'rgba(255, 255, 0, 0.8)',
+            0.7: 'rgba(234, 72, 58, 0.9)',
+            1.0: 'rgba(162, 36, 25, 1)'
+        }
+    ):
         self.add_object({
             'type': 'Heatmap',
             'points': _coordinates_many(points),
             "intensityOfMidpoint": intensity_of_midpoint,
             "radius": radius,
-            "dissipating": dissipating
+            "dissipating": dissipating,
+            "gradient": gradient
         })
 
     def to_dict(self):
