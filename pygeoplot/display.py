@@ -49,7 +49,8 @@ draw_functions = {
         options = {
             radius: obj.radius,
             intensityOfMidpoint: obj.intensityOfMidpoint,
-            dissipating: obj.dissipating
+            dissipating: obj.dissipating,
+            gradient: obj.gradient
         };
         ymaps.modules.require(['Heatmap'], function (Heatmap) {
             var heatmap = new Heatmap(obj.points, options);
