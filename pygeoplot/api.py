@@ -129,6 +129,84 @@ class Map(object):
             "gradient": gradient
         })
 
+    def add_circle(
+        self,
+        center,
+        radius,
+        hint=None,
+        content=None,
+        fill=True,
+        color='#000000',
+        opacity=0.5,
+        width=1.0,
+        fill_color=None,
+        fill_opacity=None,
+        stroke_color=None,
+        stroke_opacity=None
+    ):
+        if fill_color is None:
+            fill_color = color
+        if fill_opacity is None:
+            fill_opacity = opacity
+        if stroke_color is None:
+            stroke_color = color
+        if stroke_opacity is None:
+            stroke_opacity = opacity
+
+        self.add_object({
+            'type': 'Circle',
+            'center': _coordinates(center),
+            'radius': radius,
+            'hint': hint,
+            'content': content,
+            'fill': fill,
+            'fillColor': fill_color,
+            'fillOpacity': fill_opacity,
+            'strokeColor': stroke_color,
+            'strokeOpacity': stroke_opacity
+        })
+
+    def add_polygon(
+        self,
+        points_outer,
+        points_inner=None,
+        hint=None,
+        content=None,
+        fill=True,
+        color='#000000',
+        opacity=0.5,
+        width=1.0,
+        fill_color=None,
+        fill_opacity=None,
+        stroke_color=None,
+        stroke_opacity=None
+    ):
+        if fill_color is None:
+            fill_color = color
+        if fill_opacity is None:
+            fill_opacity = opacity
+        if stroke_color is None:
+            stroke_color = color
+        if stroke_opacity is None:
+            stroke_opacity = opacity
+
+        obj = {
+            'type': 'Polygon',
+            'pointsOuter': _coordinates_many(points_outer),
+            'hint': hint,
+            'content': content,
+            'fill': fill,
+            'fillColor': fill_color,
+            'fillOpacity': fill_opacity,
+            'strokeColor': stroke_color,
+            'strokeOpacity': stroke_opacity
+        }
+
+        if points_inner is not None:
+            obj['pointsInner'] = _coordinates_many(points_inner)
+
+        self.add_object(obj)
+
     def to_dict(self):
         """
         Outputs JSON-serializable dictionary representation of the map plot.
