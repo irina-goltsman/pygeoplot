@@ -56,6 +56,46 @@ draw_functions = {
             var heatmap = new Heatmap(obj.points, options);
             heatmap.setMap(map);
         });
+    },
+
+    "Circle": function(map, obj) {
+        properties = {
+            hintContent: obj.hint,
+            balloonContent: obj.content
+        };
+        options = {
+            fill: obj.fill,
+            fillColor: obj.fillColor,
+            fillOpacity: obj.fillOpacity,
+            strokeColor: obj.strokeColor,
+            strokeOpacity: obj.strokeOpacity,
+            strokeWidth: obj.strokeWidth
+        };
+        map.geoObjects.add(
+            new ymaps.Circle([obj.center, obj.radius], properties, options)
+        );
+    },
+
+    "Polygon": function(map, obj) {
+        properties = {
+            hintContent: obj.hint,
+            balloonContent: obj.content
+        };
+        options = {
+            fill: obj.fill,
+            fillColor: obj.fillColor,
+            fillOpacity: obj.fillOpacity,
+            strokeColor: obj.strokeColor,
+            strokeOpacity: obj.strokeOpacity,
+            strokeWidth: obj.strokeWidth
+        };
+        points = [obj.pointsOuter];
+        if ('pointsInner' in obj) {
+            points.push(obj.pointsInner);
+        }
+        map.geoObjects.add(
+            new ymaps.Polygon(points, properties, options)
+        );
     }
 
 }
