@@ -1,5 +1,3 @@
-import pandas
-
 from .api import Map
 
 __all__ = ['placemarks_from_df']
@@ -7,6 +5,7 @@ __all__ = ['placemarks_from_df']
 
 def placemarks_from_df(geomap, df, lat_col, lng_col, index_hint=True, row_content=True, preset_col=None,
                        color_col=None):
+    import pandas
     assert isinstance(geomap, Map)
     assert isinstance(df, pandas.DataFrame)
 
