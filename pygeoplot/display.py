@@ -46,10 +46,56 @@ draw_functions = {
     },
 
     "Heatmap": function(map, obj) {
+        options = {
+            radius: obj.radius,
+            intensityOfMidpoint: obj.intensityOfMidpoint,
+            dissipating: obj.dissipating,
+            gradient: obj.gradient
+        };
         ymaps.modules.require(['Heatmap'], function (Heatmap) {
-            var heatmap = new Heatmap(obj.points);
+            var heatmap = new Heatmap(obj.points, options);
             heatmap.setMap(map);
         });
+    },
+
+    "Circle": function(map, obj) {
+        properties = {
+            hintContent: obj.hint,
+            balloonContent: obj.content
+        };
+        options = {
+            fill: obj.fill,
+            fillColor: obj.fillColor,
+            fillOpacity: obj.fillOpacity,
+            strokeColor: obj.strokeColor,
+            strokeOpacity: obj.strokeOpacity,
+            strokeWidth: obj.strokeWidth
+        };
+        map.geoObjects.add(
+            new ymaps.Circle([obj.center, obj.radius], properties, options)
+        );
+    },
+
+    "Polygon": function(map, obj) {
+        properties = {
+            hintContent: obj.hint,
+            balloonContent: obj.content
+        };
+        options = {
+            fill: obj.fill,
+            fillColor: obj.fillColor,
+            fillOpacity: obj.fillOpacity,
+            strokeColor: obj.strokeColor,
+            strokeOpacity: obj.strokeOpacity,
+            strokeWidth: obj.strokeWidth
+        };
+        points = [obj.pointsOuter];
+        if ('pointsInner' in obj) {
+            points.push(obj.pointsInner);
+        }
+        map.geoObjects.add(
+            new ymaps.Polygon(points, properties, options)
+        );
     }
 
 }
@@ -98,27 +144,19 @@ function show_map(id, map_data) {
 
 TEMPLATE_HTML = jinja2.Template("""
 <div id="{{ container_id }}" style="width: {{ width }}px; height: {{ height }}px"></div>
-
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+<script src="https://cdn.rawgit.com/yandex/mapsapi-heatmap/master/build/heatmap.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     {{ js_code }}
 
-    require.config({
-        paths: {
-            "ymaps": "https://api-maps.yandex.ru/2.1/?lang=ru_RU",
-            "heatmap": "https://dl.dropboxusercontent.com/u/20300574/Heatmap.min"
-        }
-    });
+    show_map("{{ container_id }}", {{ map_json }});
 
-    require(['ymaps', 'heatmap'], function() {
-        show_map("{{ container_id }}", {{ map_json }});
-
-        {% if resizeable %}
-        $(function() {
-            $("#{{ container_id }}").resizable();
-            $("#{{ container_id }}").on("resize", function() { myMap.container.fitToViewport(); })
-        });
-        {% endif %}
+    {% if resizeable %}
+    $(function() {
+        $("#{{ container_id }}").resizable();
+        $("#{{ container_id }}").on("resize", function() { myMap.container.fitToViewport(); })
     });
+    {% endif %}
 
 </script>
 """)
@@ -129,7 +167,8 @@ TEMPLATE_STANDALONE_HTML = jinja2.Template("""
 <head>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://api-maps.yandex.ru/2.0/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script src="https://cdn.rawgit.com/yandex/mapsapi-heatmap/master/build/heatmap.min.js" type="text/javascript"></script>
 </head>
 <body>
     {{ body }}
@@ -156,6 +195,6 @@ def map_to_html(map, width=640, height=480, resizeable=False, container_id=None)
 
     return html
 
+
 def standalone_html(body):
     return TEMPLATE_STANDALONE_HTML.render(body=body)
-

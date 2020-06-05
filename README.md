@@ -13,7 +13,7 @@ A library for plotting data on the map.
 
 To install PyGeoPlot just clone the repository and run `setup.py`.
 ```bash
-$ git clone https://github.com/romovpa/pygeoplot.git
+$ git clone https://github.yandex-team.ru/goltsman/pygeoplot.git
 $ cd pygeoplot
 $ python setup.py install
 ```
@@ -63,7 +63,7 @@ m.set_state(center_point, zoom=12)
 m.add_placemark((55.702770, 37.529184),
                 hint='Alma Mater', content='Moscow State University')
 m.add_placemark((55.711552, 37.621861),
-                hint='The Center of the pentagram')
+                hint='The Center of the pentagram', color="#FF0000")
 ```
 
 The `content` could contain any valid HTML:
@@ -82,7 +82,7 @@ points = [
     (55.864414, 37.401979),
     ...
 ]
-m.add_heatmap(heatmap_points)
+m.add_heatmap(heatmap_points, intensity_of_midpoint=0.2, radius=10, dissipating=False)
 ```
 
 [Moscow CCTV cameras demo](http://nbviewer.ipython.org/github/romovpa/pygeoplot/blob/master/ipynb/DemoMoscowCCTV.ipynb)
